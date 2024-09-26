@@ -16,7 +16,7 @@ public class ContaBancaria {
 
         Scanner scanner = new Scanner(System.in);
 
-        while (opcoes != 4)
+        while (opcoes != 4) {
             System.out.println("""
                     Operações
                     
@@ -30,22 +30,25 @@ public class ContaBancaria {
             );
             opcoes = scanner.nextInt();
 
-            switch (opcoes) {
-                    case 1:
+            if (opcoes == 1) {
                 System.out.println("Seu saldo atual é: R$ " + String.format("%.2f", saldo));
-                    break;
-                    case 2:
+            } else if (opcoes == 2) {
                 System.out.println("Qual o valor deseja receber?: ");
                 movimentacao = scanner.nextInt();
                 saldo += movimentacao;
-                System.out.println("Agora, seu saldo atual é de R$ " + String.format("%.2f", saldo));
-                    break;
-                    case 3:
+                System.out.println("Agora, seu saldo atual é de R$ " + saldo);
+            } else if (opcoes == 3) {
                 System.out.println("Qual o valor deseja transferir?: ");
                 movimentacao = scanner.nextInt();
-                saldo -= movimentacao;
-                System.out.println("Agora, seu saldo atual é de R$ " + String.format("%.2f", saldo));
-                    break;
+                if (movimentacao < saldo) {
+                    saldo -= movimentacao;
+                    System.out.println("Agora, seu saldo atual é de R$ " + String.format("%.2f", saldo));
+                } else {
+                    System.out.println("Não há saldo para realizar a transferência.");
+                }
+            } else if (opcoes != 4) {
+                System.out.println("Opção inválida!");
+            }
         }
     }
 }
