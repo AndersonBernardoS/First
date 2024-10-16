@@ -1,28 +1,54 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Collections;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.println("Esse é o Screen Match!");
-        System.out.println("Filme: Top Gun: Maverick");
 
-        int anoDeLancamento = 2020;
-        System.out.println("Ano de Lançamento: " + anoDeLancamento);
-        boolean incluidoNoPlano = true;
-        double notaDoFilme = 8.1;
+        Scanner leitura = new Scanner(System.in);
+        System.out.println("Digite o limite do cartão: ");
+        double limite = leitura.nextDouble();
+        Cartao cartao = new Cartao(limite);
 
-        double media = (9.8 + 6.3 + 8.0) / 3;
-        System.out.println("Media: " + media);
-        String sinopse;
-        sinopse = """
-                Filme Top Gun
-                Filme de aventura com galã dos anos 80.
-                Ano de Lancamento: 
-                """ + anoDeLancamento;
-        System.out.println(sinopse);
+        int sair = 1;
+        while(sair != 0) {
+            System.out.println("Digite a descrição da compra:");
+            String descricao = leitura.next();
 
-        int classificacao = (int) (media / 2);
-        System.out.println(classificacao);
+            System.out.println("Digite o valor da compra:");
+            double valor = leitura.nextDouble();
+
+            Compra compra = new Compra(descricao, valor);
+            boolean compraRealizada = cartao.lancaCompra(compra);
+
+            if (compraRealizada) {
+                System.out.println("Compra realizada!");
+                System.out.println("Digite 0 para sair ou 1 para continuar");
+                sair = leitura.nextInt();
+            } else {
+                System.out.println("Saldo insuficiente!");
+                sair = 0;
+            }
+        }
+
+        System.out.println("***********************");
+        System.out.println("COMPRAS REALIZADAS:\n");
+        Collections.sort(cartao.getCompras());
+        for (Compra c : cartao.getCompras()) {
+            System.out.println(c.getDescricao() + " - " +c.getValor());
+        }
+        System.out.println("\n***********************");
+
+        System.out.println("\nSaldo do cartão: " +cartao.getSaldo());
+
+        System.out.println("***********************");
+        System.out.println("COMPRAS REALIZADAS:\n");
+
+        for (Compra c : cartao.getCompras()) {
+            System.out.println(c.getDescricao() + " - " +c.getValor());
+        }
+        System.out.println("\n***********************");
+
+        System.out.println("\nSaldo do cartão: " +cartao.getSaldo());
+
     }
 }
